@@ -26,6 +26,7 @@ Boards=( \
 	asus_rt-ac1200gu \
 	dlink_dir-878-a1 \
 	mercury_mac2600r \
+	skspruce_wia3300-10 \
 	)
 
 if [ ! -d "./bin" ]; then

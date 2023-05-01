@@ -1,0 +1,134 @@
+// SPDX-License-Identifier: GPL-2.0+
+
+/dts-v1/;
+#include "mt7621.dtsi"
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "SKSpruce WIA3300-10";
+	compatible = "skspruce,wia3300-10", "mediatek,mt7621-soc";
+
+	aliases {
+		spi0 = &spi;
+	};
+
+	chosen {
+		stdout-path = &uartlite0;
+	};
+
+	config {
+		reset-button = "reset";
+		status1-led = "green:status";
+		status2-led = "red:status";
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		reset {
+			label = "reset";
+			gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_RESTART>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		status_green {
+			label = "green:status";
+			gpios = <&gpio 24 GPIO_ACTIVE_LOW>;
+			default-state = "on";
+		};
+
+		status_red {
+			label = "red:status";
+			gpios = <&gpio 23 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+
+		wlan_blue {
+			label = "blue:wlan";
+			gpios = <&gpio 22 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+
+		wlan_green {
+			label = "green:wlan";
+			gpios = <&gpio 4 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+
+		wan {
+			label = "green:wan";
+			gpios = <&gpio 3 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+	};
+};
+
+&pinctrl {
+	state_default: pinmux_conf {
+		spi {
+			groups = "spi";
+			function = "spi";
+		};
+
+		sdhci {
+			groups = "sdhci";
+			function = "gpio";
+		};
+
+		jtag {
+			groups = "jtag";
+			function = "gpio";
+		};
+
+		wdt {
+			groups = "wdt";
+			function = "gpio";
+		};
+
+		rgmii2 {
+			groups = "rgmii2";
+			function = "gpio";
+		};
+	};
+};
+
+&gpio {
+	status = "okay";
+};
+
+&i2c {
+	gpios = <&gpio 3 1>, /* PIN3 as SDA */
+		<&gpio 4 1>; /* PIN4 as CLK */
+};
+
+&spi {
+	status = "okay";
+
+	spi-max-frequency = <45000000>;
+
+	spi-flash@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "spi-flash";
+		spi-max-frequency = <45000000>;
+		reg = <0>;
+	};
+};
+
+&uartlite0 {
+	status = "okay";
+};
+
+&eth {
+	status = "okay";
+};
+
+&xhci {
+	status = "okay";
+};

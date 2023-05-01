@@ -26,6 +26,7 @@ dtb-$(CONFIG_BOARD_SIM_SIMAX1800T) += sim,simax1800t.dtb
 dtb-$(CONFIG_BOARD_ASUS_RTAC1200GU) += asus,rt-ac1200gu.dtb
 dtb-$(CONFIG_BOARD_DLINK_DIR878A1) += dlink,dir-878-a1.dtb
 dtb-$(CONFIG_BOARD_MERCURY_MAC2600R) += mercury,mac2600r.dtb
+dtb-$(CONFIG_BOARD_SKSPRUCE_WIA330010) += skspruce,wia3300-10.dtb
 
 targets += $(dtb-y)
 
