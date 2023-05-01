@@ -1,0 +1,122 @@
+// SPDX-License-Identifier: GPL-2.0+
+
+/dts-v1/;
+#include "mt7621.dtsi"
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "ZTE E8820 V2";
+	compatible = "zte,e8820-v2", "mediatek,mt7621-soc";
+
+	aliases {
+		spi0 = &spi;
+	};
+
+	chosen {
+		stdout-path = &uartlite0;
+	};
+
+	config {
+		reset-button = "reset";
+		wps-button = "wps";
+		status1-led = "white:status";
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		reset {
+			label = "reset";
+			gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_RESTART>;
+		};
+
+		wps {
+			label = "wps";
+			gpios = <&gpio 24 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_RESTART>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		power {
+			label = "white:power";
+			gpios = <&gpio 29 GPIO_ACTIVE_LOW>;
+			default-state = "on";
+		};
+
+		status {
+			label = "white:status";
+			gpios = <&gpio 31 GPIO_ACTIVE_LOW>;
+			default-state = "on";
+		};
+	};
+};
+
+&pinctrl {
+	state_default: pinmux_conf {
+		spi {
+			groups = "spi";
+			function = "spi";
+		};
+
+		sdhci {
+			groups = "sdhci";
+			function = "gpio";
+		};
+
+		jtag {
+			groups = "jtag";
+			function = "gpio";
+		};
+
+		wdt {
+			groups = "wdt";
+			function = "gpio";
+		};
+
+		rgmii2 {
+			groups = "rgmii2";
+			function = "gpio";
+		};
+	};
+};
+
+&gpio {
+	status = "okay";
+};
+
+&i2c {
+	gpios = <&gpio 3 1>, /* PIN3 as SDA */
+		<&gpio 4 1>; /* PIN4 as CLK */
+};
+
+&spi {
+	status = "okay";
+
+	spi-max-frequency = <45000000>;
+
+	spi-flash@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "spi-flash";
+		spi-max-frequency = <45000000>;
+		reg = <0>;
+	};
+};
+
+&uartlite0 {
+	status = "okay";
+};
+
+&eth {
+	status = "okay";
+};
+
+&xhci {
+	status = "okay";
+};

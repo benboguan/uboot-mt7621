@@ -27,6 +27,7 @@ Boards=( \
 	dlink_dir-878-a1 \
 	mercury_mac2600r \
 	skspruce_wia3300-10 \
+	zte_e8820-v2 \
 	)
 
 if [ ! -d "./bin" ]; then
